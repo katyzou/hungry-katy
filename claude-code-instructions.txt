@@ -1,0 +1,86 @@
+# Project: Rebuild hungrykaty.com as a static Astro site with recipe mini-games
+
+## Context
+- I'm Katy. hungrykaty.com is my food blog, currently WordPress (Yummy Recipe theme) on a
+  DigitalOcean droplet someone else pays for. I'm moving it to this repo + GitHub Pages so I own it.
+- Domain is registered at Squarespace (DNS managed there). Do NOT ask me to change DNS until the
+  new site is fully built and I've approved it.
+- My WordPress export (WXR XML, ~34 MB) is in this repo: hungrykaty_WordPress_2026-10-01.xml
+  - 20 published posts, 7 drafts, 11 pages, 312 image attachments
+  - The XML has image URLs, not image files. Download the photos from the live site
+    (https://hungrykaty.com/wp-content/uploads/...) while it's still up.
+- Repo is public; that's fine.
+
+## Working rules
+- Plan first, then show me samples before committing large changes.
+- Work on a branch and open a PR for me to review; don't push straight to main.
+- Ask before deleting anything.
+
+## Tech stack
+- Astro, static output, deployed with GitHub Pages via GitHub Actions.
+- Custom domain hungrykaty.com (public/CNAME), www -> apex.
+- Recipes as Markdown in an Astro content collection, one file per recipe, with structured
+  frontmatter: title, date, categories, servings, times, hero image, ingredients (list with
+  quantities), steps (ordered list), story/intro (body), and a `game` config block.
+- Add schema.org Recipe JSON-LD to each recipe page.
+- Optimize images (responsive sizes, webp/avif).
+- No redirects from old WordPress URLs needed. Make a cute, helpful 404 page that shows
+  a recipe grid.
+
+## Content to migrate (20 published recipes)
+Main courses: Chinese Hong Shao Ribs, Katy's Jerk Chicken, Lomo Saltado, Chinese Chive and
+Sauerkraut Dumplings, Spicy Handmade Noodles, Best Butter Chicken
+Appetizers/Snacks: Katy's Easy Sev Puri, Chinese Scallion Pancakes Stuffed with Garlic Mashed
+Potatoes and Mozzarella, Mayak Gyeran (Korean Drug Eggs), Cheesy & Creamy Baked Oysters,
+Rainbow Imitation Crab Ceviche, Radish Cake: Lo Bak Gao, Khandvi
+Sides/Fermentation: 3 Peppercorn Pickled Onions, Chinese Napa Cabbage Sauerkraut, Easy Kimchi,
+Ponytail Radish Kimchi
+Desserts/Basics: Best & Super Easy Matcha Cheesecake, Coconut Chocolate Hazelnut Babka,
+Super Easy Mozzarella
+- Categories: Appetizers, Main Courses, Sides (incl. Fermentation, Basics), Snacks, Desserts.
+- Drop the Travels section entirely (it's empty). The old empty category pages aren't needed.
+- The About page is empty in the export; ask me for About content.
+- Open questions to confirm with me: (1) bring over the "Chinese Steamed Fish" draft as an
+  unpublished draft? skip the 6 stub drafts? (2) keep a link to katyshi.com? (3) keep AdSense?
+
+## Visual design
+- Light beige gingham background (CSS-generated, not an image).
+- Cute, friendly, sticker-sheet style: rounded cards with white outline + soft shadow,
+  category buttons as illustrated sticker badges, "Play the recipe" badge on cards.
+- Palette inspired by flat cartoon breakfast illustrations: sage green, butter yellow,
+  strawberry red, blueberry purple, caramel brown, cream.
+- Fonts: rounded/bubbly display font for headings + logo (e.g., Fredoka or Baloo 2), very
+  readable soft body font (e.g., Nunito). Recipe text must stay easy to read.
+- All illustrations must be ORIGINAL (my inspo images are a stock-style illustration and
+  another shop's sticker sheet; use them only as mood reference, never copy them).
+- Logo + favicon: an original cute stack of pancakes (butter pat, syrup drip, maybe a tiny
+  smiling face) with a "hungry katy" wordmark. Show me 2-3 options. Deliver SVG + PNG sizes
+  (favicon, apple-touch-icon, social preview).
+- Homepage focuses on recipes: friendly hero with logo, category stickers, newest recipes grid.
+- Mobile-first, accessible (contrast, alt text, keyboard support, prefers-reduced-motion).
+
+## Mini-games (in the spirit of cooking mini-game classics, but all original)
+Each recipe gets an optional 3-stage game driven by its `game` config:
+1. Shop: drag the recipe's real ingredients from a market shelf into a basket; a few silly
+   decoy items.
+2. Prep: quick tap/swipe challenges matching real steps: chop along dotted lines, pour to a
+   measuring line, knead, crack eggs, roll, pleat dumplings, etc.
+3. Cook: timing/steadiness challenges: stir in circles, keep heat in the "just right" zone,
+   flip at the right moment, plate the dish.
+- End with a star rating + "dish complete" sticker. Include an original kitchen-helper mascot.
+- Build a reusable library of ~10 mechanics so a recipe's game is just a short config list,
+  e.g. game: [knead, roll, cut, boil].
+- Runs fully client-side (no backend), touch + mouse, loads only when "Play" is tapped,
+  always has a "Skip to recipe" option. The recipe itself stays primary for readers and SEO.
+
+## Rollout
+1. Convert the export -> Markdown recipes + download/optimize photos. Show me 2 sample recipe
+   files first.
+2. Build layout/design system, logo/favicon options, homepage, category pages, recipe page,
+   404. Give me a way to preview.
+3. Build the game engine + pilot game for Spicy Handmade Noodles; I review.
+4. Roll out games to the other recipes.
+5. Set up GitHub Pages deploy, then walk me through the DNS change at Squarespace (keep the
+   existing Google verification CNAMEs).
+
+Start with step 1. Tell me your plan before writing code.
